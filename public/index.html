@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+
+  <body>
+
+  </body>
+  <script>
+
+    const webSocketUrl = 'ws://127.0.0.1:8080';
+    const createSocket = () => {
+      try {
+        const ws = new WebSocket(webSocketUrl);
+        ws.onopen = () => {
+          console.log(ws.readyState, 'ws/readystate');
+        };
+        ws.onclose = () => {
+          console.log('onclose', ws.readyState, 'ws/readystate');
+        };
+        ws.onerror = (e) => {
+          console.log(e)
+          console.log('onerror', ws.readyState, 'ws/readystate');
+        };
+        ws.onmessage = (e) => {
+          console.log('onmessage', e.data);
+        };
+        return ws;
+      } catch (error) {
+        console.log('error',error);
+      }
+    };
+
+    const ws = createSocket();
+    setInterval(() => {
+      if (ws.readyState !== 3) {
+        ws.send(1234)
+      }
+    }, 1000)
+
+  </script>
+
+</html>
