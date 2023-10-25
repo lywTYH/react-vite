@@ -1,5 +1,5 @@
-import { useState, useCallback, useEffect, useRef } from 'react';
-import { map} from 'lodash-es';
+import {useState, useCallback, useEffect, useRef} from 'react';
+import {map} from 'lodash-es';
 import './App.css';
 
 const webSocketUrl = 'ws://127.0.0.1:8080';
@@ -25,7 +25,6 @@ function useWebSocket(webSocketUrl: string) {
         if (e.data instanceof Blob) {
           const reader = new FileReader();
           reader.onload = () => {
-            console.log('Result: ' + reader.result?.toString);
             setHistory((list) => [
               ...list,
               {
@@ -46,6 +45,7 @@ function useWebSocket(webSocketUrl: string) {
         }
       };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
     }
   }, [webSocketUrl]);
@@ -77,10 +77,10 @@ function useWebSocket(webSocketUrl: string) {
     ]);
   }, []);
 
-  return { send, historyMsg, status };
+  return {send, historyMsg, status};
 }
 
-function MsgList({ historyMsg }: { historyMsg: Info[] }) {
+function MsgList({historyMsg}: {historyMsg: Info[]}) {
   return (
     <div>
       {map(historyMsg, (item, index) => {
@@ -88,25 +88,25 @@ function MsgList({ historyMsg }: { historyMsg: Info[] }) {
           ...item,
           id: index,
         };
-      }).map(({ value: msg, date }) => {
+      }).map(({value: msg, date}) => {
         return <p key={date.toISOString()}>{msg}</p>;
       })}
     </div>
   );
 }
 
+
 function App() {
-  const [msg, setMsg] = useState('');
+  const [msg, setMsg] = useState<string>('');
   const [count, setCount] = useState(0);
-  const { send, status, historyMsg } = useWebSocket(webSocketUrl);
+  const {send, status, historyMsg} = useWebSocket(webSocketUrl);
   const handleClickSendMessage = useCallback((msg: string) => send(msg), [send]);
-  console.log(historyMsg);
   return (
     <div>
       <h1>websocket </h1>
       <div>
         <h1>WebSockets Demo</h1>
-        <div id="status">'status':{status}</div>
+        <div id="status">status:{status}</div>
         <ul id="messages"></ul>
         <form
           id="message"

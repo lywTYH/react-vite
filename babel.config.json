@@ -1,0 +1,22 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "entry",
+        "corejs": "3.22",
+        // Exclude transforms that make all code slower
+        "exclude": ["transform-typeof-symbol"]
+      }
+    ],
+    [
+      "@babel/preset-react",
+      {
+        "runtime": "automatic"
+      }
+    ],
+    "@babel/preset-typescript"
+  ],
+  //["@babel-plugin-macros"],
+  "plugins": [["@babel/plugin-transform-runtime"]]
+}

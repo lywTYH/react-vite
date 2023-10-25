@@ -1,0 +1,1 @@
+测试 bable babel-plugin-macros
